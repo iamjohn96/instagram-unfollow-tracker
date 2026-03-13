@@ -7,12 +7,15 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 const steps = [
-  { title: 'Open Instagram', desc: 'Tap your profile picture in the bottom right corner, then tap the menu icon (☰) in the top right.' },
-  { title: 'Go to Settings', desc: 'Tap "Settings and privacy" at the bottom of the menu.' },
-  { title: 'Your Activity', desc: 'Scroll down and tap "Your activity" then "Download your information".' },
-  { title: 'Select Data', desc: 'Tap "Download or transfer information" → "Some of your information" → check "Followers and following" only.' },
-  { title: 'Choose JSON Format', desc: 'Select "Download to device". Change the Format dropdown to "JSON" (not HTML). Leave date range as All time.' },
-  { title: 'Request Download', desc: 'Tap "Create files". Instagram will email you when the file is ready (usually within minutes to a few hours). Download the ZIP from that email.' },
+  { title: 'Open Instagram', desc: 'Tap your profile picture in the bottom right to go to your profile.' },
+  { title: 'Open the menu', desc: 'Tap the three-line menu (☰) in the top right corner.' },
+  { title: 'Go to Account Center', desc: 'Tap "Account Center" from the menu.' },
+  { title: 'Your information and permissions', desc: 'Tap "Your information and permissions".' },
+  { title: 'Download your information', desc: 'Tap "Download your information".' },
+  { title: 'Select your account', desc: 'Tap "Download or transfer information", then choose your Instagram account.' },
+  { title: 'Choose what to download', desc: 'Tap "Some of your information", then check "Followers and following" ONLY. Leave everything else unchecked.' },
+  { title: 'Set format and date range', desc: 'Select "Download to device". Change the Format to "JSON" (not HTML). Set Date range to "All time".' },
+  { title: 'Request and download', desc: 'Tap "Create files". Instagram will email you when ready (usually minutes to a few hours). Open that email and download the ZIP file.' },
 ]
 
 export default function GuidePage() {
@@ -27,7 +30,7 @@ export default function GuidePage() {
         <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Follow these steps to get your followers &amp; following data from Instagram.</p>
 
         {/* Platform toggle */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex gap-2 mb-4">
           {(['ios', 'android'] as const).map((p) => (
             <button
               key={p}
@@ -43,6 +46,7 @@ export default function GuidePage() {
             </button>
           ))}
         </div>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mb-8">The steps are identical on iOS and Android.</p>
 
         {/* Steps */}
         <div className="space-y-4 mb-10">
