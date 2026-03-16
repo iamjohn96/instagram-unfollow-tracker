@@ -15,7 +15,7 @@ export default function Footer() {
           <Link href="/guide" className="hover:text-[#1A73E8] transition-colors">{t.footer_guide}</Link>
         </div>
         <p>{t.footer_disclaimer}</p>
-        <p className="mt-1">© {new Date().getFullYear()} UnfollowTracker</p>
+        <p className="mt-1">© {new Date().getFullYear()} SafeUnfollow</p>
       </div>
     </footer>
   )

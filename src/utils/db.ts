@@ -14,7 +14,7 @@ class InstagramDB extends Dexie {
   snapshots!: Table<Snapshot>
 
   constructor() {
-    super('InstagramUnfollowTracker')
+    super('SafeUnfollow')
     this.version(1).stores({
       snapshots: '++id, date, label',
     })

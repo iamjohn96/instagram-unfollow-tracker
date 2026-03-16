@@ -35,7 +35,7 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg text-[#1A73E8]">
           <Instagram size={22} />
-          <span>UnfollowTracker</span>
+          <span>SafeUnfollow</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">

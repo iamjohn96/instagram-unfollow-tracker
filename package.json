@@ -1,5 +1,5 @@
 {
-  "name": "instagram-unfollow-tracker",
+  "name": "safeunfollow",
   "version": "1.0.0",
   "description": "The safest Instagram unfollow tracker. No login. No ban risk.",
   "main": "index.js",

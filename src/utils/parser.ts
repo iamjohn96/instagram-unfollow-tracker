@@ -66,12 +66,15 @@ export async function parseZipFile(file: File): Promise<ParseResult> {
   let followers: InstagramUser[] = []
   let following: InstagramUser[] = []
 
-  const followerFiles = Object.keys(zip.files).filter(
-    (name) => name.includes('followers') && name.endsWith('.json')
-  )
-  const followingFiles = Object.keys(zip.files).filter(
-    (name) => name.includes('following') && name.endsWith('.json')
-  )
+  // Match on basename only to avoid false matches from folder names like "followers_and_following"
+  const followerFiles = Object.keys(zip.files).filter((name) => {
+    const basename = name.split('/').pop() || ''
+    return basename.startsWith('followers') && basename.endsWith('.json')
+  })
+  const followingFiles = Object.keys(zip.files).filter((name) => {
+    const basename = name.split('/').pop() || ''
+    return basename.startsWith('following') && basename.endsWith('.json')
+  })
 
   if (followerFiles.length === 0 && followingFiles.length === 0) {
     throw new Error(
@@ -90,6 +93,23 @@ export async function parseZipFile(file: File): Promise<ParseResult> {
     const data = JSON.parse(content)
     following = [...following, ...parseFollowing(data)]
   }
+
+  // Deduplicate in case Instagram splits data across multiple files
+  const seenFollowers = new Set<string>()
+  followers = followers.filter((u) => {
+    const key = u.username.toLowerCase()
+    if (seenFollowers.has(key)) return false
+    seenFollowers.add(key)
+    return true
+  })
+
+  const seenFollowing = new Set<string>()
+  following = following.filter((u) => {
+    const key = u.username.toLowerCase()
+    if (seenFollowing.has(key)) return false
+    seenFollowing.add(key)
+    return true
+  })
 
   return { followers, following }
 }

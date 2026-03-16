@@ -6,7 +6,6 @@ import { Upload, FileArchive, CheckCircle, AlertCircle, Shield } from 'lucide-re
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { parseFile } from '@/utils/parser'
-import { db } from '@/utils/db'
 import { useTranslation } from '@/utils/i18n'
 
 type Status = 'idle' | 'parsing' | 'success' | 'error'
@@ -27,27 +26,6 @@ export default function UploadPage() {
     try {
       setProgress(t.upload_parsing_data)
       const { followers, following } = await parseFile(file)
-
-      setProgress(t.upload_saving)
-      const followersData: Record<string, number> = {}
-      const followingData: Record<string, number> = {}
-      followers.forEach((u) => { followersData[u.username] = u.timestamp })
-      following.forEach((u) => { followingData[u.username] = u.timestamp })
-
-      const count = await db.snapshots.count()
-      if (count >= 1) {
-        // Free tier: only 1 snapshot allowed
-        await db.snapshots.clear()
-      }
-
-      await db.snapshots.add({
-        date: new Date().toISOString(),
-        label: `Snapshot ${new Date().toLocaleDateString()}`,
-        followers: followers.map((u) => u.username),
-        following: following.map((u) => u.username),
-        followersData,
-        followingData,
-      })
 
       // Store current data in sessionStorage for dashboard
       sessionStorage.setItem('ig_followers', JSON.stringify(followers))
