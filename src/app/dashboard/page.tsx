@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Users, UserMinus, UserPlus, ArrowLeftRight, Search, ExternalLink, Lock, Upload, BookmarkPlus, Check } from 'lucide-react'
+import { Users, UserMinus, UserPlus, ArrowLeftRight, Search, ExternalLink, Lock, Upload, BookmarkPlus, Check, ChevronDown } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PremiumModal from '@/components/PremiumModal'
@@ -25,25 +25,25 @@ function UserList({ users, sort, emptyLabel }: { users: InstagramUser[]; sort: S
   }, [users, sort])
 
   if (sorted.length === 0) {
-    return <p className="text-center text-slate-400 dark:text-slate-500 py-10 text-sm">{emptyLabel}</p>
+    return <p className="text-center text-slate-400 dark:text-zinc-500 py-12 text-sm">{emptyLabel}</p>
   }
 
   return (
-    <ul className="divide-y divide-slate-100 dark:divide-slate-700">
+    <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
       {sorted.map((u) => (
-        <li key={u.username} className="flex items-center justify-between py-3 px-1">
+        <li key={u.username} className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
           <div>
             <a
               href={`https://www.instagram.com/${u.username}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[#1A73E8] hover:underline text-sm flex items-center gap-1"
+              className="font-medium text-blue-600 dark:text-blue-400 hover:underline text-sm flex items-center gap-1.5"
             >
               @{u.username}
-              <ExternalLink size={12} />
+              <ExternalLink size={11} className="opacity-60" />
             </a>
             {u.timestamp > 0 && (
-              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-400 dark:text-zinc-500 mt-0.5">
                 {new Date(u.timestamp * 1000).toLocaleDateString()}
               </p>
             )}
@@ -123,7 +123,7 @@ export default function DashboardPage() {
       })
       setTodaySnapshot({ id: id as number, date: now.toISOString(), label, followers: followers.map((u) => u.username), following: following.map((u) => u.username), followersData, followingData })
     }
-    setPrevSnapshot(undefined) // reset so Changes tab reloads
+    setPrevSnapshot(undefined)
     setSaveState('saved')
     setTimeout(() => setSaveState('idle'), 2500)
   }
@@ -164,13 +164,15 @@ export default function DashboardPage() {
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="text-center">
-            <Users size={48} className="text-slate-300 mx-auto mb-4" />
-            <h2 className="text-lg font-semibold text-[#1E293B] dark:text-white mb-2">{t.dash_no_data_title}</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">{t.dash_no_data_desc}</p>
+          <div className="text-center animate-fade-in-up">
+            <div className="w-20 h-20 bg-slate-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <Users size={36} className="text-slate-300 dark:text-zinc-600" />
+            </div>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t.dash_no_data_title}</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 max-w-sm leading-relaxed">{t.dash_no_data_desc}</p>
             <Link
               href="/upload"
-              className="inline-flex items-center gap-2 bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-200 shadow-md shadow-blue-500/20 hover:scale-[1.02]"
             >
               <Upload size={16} />
               {t.dash_upload_file}
@@ -187,39 +189,45 @@ export default function DashboardPage() {
       <Header />
       {showPremium && <PremiumModal onClose={() => setShowPremium(false)} />}
 
-      <main className="flex-1 max-w-3xl mx-auto px-4 py-8 w-full">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-bold text-[#1E293B] dark:text-white">{t.dash_title}</h1>
-          <Link href="/upload" className="text-xs text-[#1A73E8] hover:underline flex items-center gap-1">
-            <Upload size={12} /> {t.dash_reupload}
+      <main className="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full">
+        {/* Page header */}
+        <div className="flex items-center justify-between mb-8 animate-fade-in-up">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t.dash_title}</h1>
+          <Link
+            href="/upload"
+            className="flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-zinc-700 px-3 py-1.5 rounded-xl hover:border-blue-300 dark:hover:border-blue-800"
+          >
+            <Upload size={13} /> {t.dash_reupload}
           </Link>
         </div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 animate-fade-in-up animate-delay-100">
           {[
-            { icon: Users, label: t.dash_followers, value: followers.length, color: 'text-blue-500' },
-            { icon: UserPlus, label: t.dash_following, value: following.length, color: 'text-purple-500' },
-            { icon: ArrowLeftRight, label: t.dash_mutual, value: mutual.length, color: 'text-green-500' },
-            { icon: UserMinus, label: t.dash_dont_follow_back, value: notFollowingBack.length, color: 'text-red-500' },
-          ].map(({ icon: Icon, label, value, color }) => (
-            <div key={label} className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-100 dark:border-slate-700 shadow-sm">
-              <Icon size={18} className={`${color} mb-2`} />
-              <p className="text-xl font-bold text-[#1E293B] dark:text-white">{value.toLocaleString()}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</p>
+            { icon: Users, label: t.dash_followers, value: followers.length, leftBorder: 'border-l-blue-500', iconColor: 'text-blue-500', iconBg: 'bg-blue-50 dark:bg-blue-950/30' },
+            { icon: UserPlus, label: t.dash_following, value: following.length, leftBorder: 'border-l-violet-500', iconColor: 'text-violet-500', iconBg: 'bg-violet-50 dark:bg-violet-950/30' },
+            { icon: ArrowLeftRight, label: t.dash_mutual, value: mutual.length, leftBorder: 'border-l-emerald-500', iconColor: 'text-emerald-500', iconBg: 'bg-emerald-50 dark:bg-emerald-950/30' },
+            { icon: UserMinus, label: t.dash_dont_follow_back, value: notFollowingBack.length, leftBorder: 'border-l-red-500', iconColor: 'text-red-500', iconBg: 'bg-red-50 dark:bg-red-950/30' },
+          ].map(({ icon: Icon, label, value, leftBorder, iconColor, iconBg }) => (
+            <div key={label} className={`bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-slate-200 dark:border-zinc-800 border-l-4 ${leftBorder} shadow-sm`}>
+              <div className={`inline-flex items-center justify-center w-8 h-8 ${iconBg} rounded-lg mb-3`}>
+                <Icon size={15} className={iconColor} />
+              </div>
+              <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{value.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-tight">{label}</p>
             </div>
           ))}
         </div>
 
-        {/* Save Snapshot */}
-        <div className="flex justify-center mb-6">
+        {/* Save snapshot */}
+        <div className="flex justify-center mb-8 animate-fade-in-up animate-delay-200">
           <button
             onClick={saveSnapshot}
             disabled={saveState === 'saving'}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm ${
+            className={`inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:scale-[1.02] ${
               saveState === 'saved'
-                ? 'bg-green-500 text-white'
-                : 'bg-[#1A73E8] hover:bg-[#1557B0] text-white'
+                ? 'bg-emerald-500 text-white shadow-emerald-500/20'
+                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20'
             }`}
           >
             {saveState === 'saved' ? (
@@ -233,7 +241,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-4 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+        <div className="flex gap-2 mb-5 animate-fade-in-up animate-delay-300">
           {[
             { key: 'notFollowingBack', label: t.dash_tab1, count: notFollowingBack.length },
             { key: 'iDontFollowBack', label: t.dash_tab2, count: iDontFollowBack.length },
@@ -241,57 +249,60 @@ export default function DashboardPage() {
           ].map((tabItem) => (
             <button
               key={tabItem.key}
-              onClick={() => {
-                setTab(tabItem.key as Tab); setSearch('')
-              }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium transition-colors ${
+              onClick={() => { setTab(tabItem.key as Tab); setSearch('') }}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                 tab === tabItem.key
-                  ? 'bg-white dark:bg-slate-700 text-[#1A73E8] shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                  : 'bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
               }`}
             >
               {tabItem.label}
               {tabItem.count !== undefined && (
-                <span className="bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300 text-xs px-1.5 py-0.5 rounded-full">{tabItem.count}</span>
+                <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${
+                  tab === tabItem.key
+                    ? 'bg-white/20 text-white'
+                    : 'bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-zinc-300'
+                }`}>
+                  {tabItem.count}
+                </span>
               )}
             </button>
           ))}
         </div>
 
+        {/* Tab content */}
         {tab === 'changes' ? (
           prevSnapshot === null ? (
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm px-4 py-10 text-center">
-              <p className="text-slate-400 dark:text-slate-500 text-sm">{t.dash_no_snapshot}</p>
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 px-4 py-12 text-center shadow-sm">
+              <p className="text-slate-400 dark:text-zinc-500 text-sm">{t.dash_no_snapshot}</p>
             </div>
           ) : changes && (changes.lostFollowers.length > 0 || changes.gainedFollowers.length > 0) ? (
             <div className="space-y-4">
-              {/* Summary cards */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-red-600 dark:text-red-400">{changes.lostFollowers.length}</p>
-                  <p className="text-sm font-medium text-red-700 dark:text-red-300 mt-0.5">{t.dash_new_unfollowers}</p>
+                <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 rounded-2xl p-5">
+                  <p className="text-3xl font-extrabold text-red-600 dark:text-red-400">{changes.lostFollowers.length}</p>
+                  <p className="text-sm font-medium text-red-700 dark:text-red-300 mt-1">{t.dash_new_unfollowers}</p>
                 </div>
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">{changes.gainedFollowers.length}</p>
-                  <p className="text-sm font-medium text-green-700 dark:text-green-300 mt-0.5">{t.dash_new_followers}</p>
+                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/40 rounded-2xl p-5">
+                  <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{changes.gainedFollowers.length}</p>
+                  <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300 mt-1">{t.dash_new_followers}</p>
                 </div>
               </div>
 
-              {/* New Unfollowers list */}
               {changes.lostFollowers.length > 0 && (
-                <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm px-4 pt-3 pb-1">
-                  <p className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-1">{t.dash_new_unfollowers}</p>
-                  <ul className="divide-y divide-slate-100 dark:divide-slate-700">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
+                  <p className="text-xs font-bold text-red-500 uppercase tracking-wider mb-2">{t.dash_new_unfollowers}</p>
+                  <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
                     {changes.lostFollowers.map((u) => (
-                      <li key={u.username} className="flex items-center justify-between py-3 px-1">
+                      <li key={u.username} className="py-3">
                         <a
                           href={`https://www.instagram.com/${u.username}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-medium text-red-500 hover:underline text-sm flex items-center gap-1"
+                          className="font-medium text-red-500 hover:underline text-sm flex items-center gap-1.5"
                         >
                           @{u.username}
-                          <ExternalLink size={12} />
+                          <ExternalLink size={11} className="opacity-60" />
                         </a>
                       </li>
                     ))}
@@ -299,21 +310,20 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {/* New Followers list */}
               {changes.gainedFollowers.length > 0 && (
-                <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm px-4 pt-3 pb-1">
-                  <p className="text-xs font-semibold text-green-500 uppercase tracking-wide mb-1">{t.dash_new_followers}</p>
-                  <ul className="divide-y divide-slate-100 dark:divide-slate-700">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
+                  <p className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">{t.dash_new_followers}</p>
+                  <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
                     {changes.gainedFollowers.map((u) => (
-                      <li key={u.username} className="flex items-center justify-between py-3 px-1">
+                      <li key={u.username} className="py-3">
                         <a
                           href={`https://www.instagram.com/${u.username}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-medium text-green-500 hover:underline text-sm flex items-center gap-1"
+                          className="font-medium text-emerald-500 hover:underline text-sm flex items-center gap-1.5"
                         >
                           @{u.username}
-                          <ExternalLink size={12} />
+                          <ExternalLink size={11} className="opacity-60" />
                         </a>
                       </li>
                     ))}
@@ -322,8 +332,8 @@ export default function DashboardPage() {
               )}
             </div>
           ) : changes ? (
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm px-4 py-10 text-center">
-              <p className="text-slate-400 dark:text-slate-500 text-sm">{t.dash_no_changes}</p>
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 py-12 text-center">
+              <p className="text-slate-400 dark:text-zinc-500 text-sm">{t.dash_no_changes}</p>
             </div>
           ) : null
         ) : (
@@ -331,41 +341,43 @@ export default function DashboardPage() {
             {/* Search & sort */}
             <div className="flex gap-2 mb-4">
               <div className="relative flex-1">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500" />
                 <input
                   type="text"
                   placeholder={t.dash_search}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-8 pr-3 py-2 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A73E8]/30 dark:text-white"
+                  className="w-full pl-9 pr-3 py-2.5 text-sm bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 dark:text-white dark:placeholder:text-zinc-500 transition-all shadow-sm"
                 />
               </div>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortKey)}
-                className="text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 focus:outline-none dark:text-white"
-              >
-                <option value="alpha">{t.dash_sort_alpha}</option>
-                <option value="date">{t.dash_sort_date}</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as SortKey)}
+                  className="appearance-none text-sm bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl pl-3 pr-8 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:text-white transition-all shadow-sm"
+                >
+                  <option value="alpha">{t.dash_sort_alpha}</option>
+                  <option value="date">{t.dash_sort_date}</option>
+                </select>
+                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
             </div>
 
-            {/* List */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm px-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4">
               <UserList users={filtered} sort={sort} emptyLabel={t.dash_no_results} />
             </div>
           </>
         )}
 
         {/* Premium teaser */}
-        <div className="mt-6 bg-gradient-to-r from-[#1A73E8]/10 to-purple-500/10 border border-[#1A73E8]/20 rounded-xl p-4 flex items-center justify-between">
+        <div className="mt-6 bg-gradient-to-r from-blue-600/8 to-cyan-500/8 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-900/50 rounded-2xl p-5 flex items-center justify-between gap-4">
           <div>
-            <p className="font-semibold text-[#1E293B] dark:text-white text-sm">{t.dash_premium_title}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.dash_premium_desc}</p>
+            <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.dash_premium_title}</p>
+            <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{t.dash_premium_desc}</p>
           </div>
           <button
             onClick={() => setShowPremium(true)}
-            className="bg-[#1A73E8] hover:bg-[#1557B0] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0"
+            className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm"
           >
             {t.dash_upgrade}
           </button>

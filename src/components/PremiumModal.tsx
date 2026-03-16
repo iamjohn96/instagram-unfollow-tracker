@@ -1,6 +1,6 @@
 'use client'
 
-import { X, Check, Lock } from 'lucide-react'
+import { X, Check, Sparkles } from 'lucide-react'
 import { useTranslation } from '@/utils/i18n'
 
 interface PremiumModalProps {
@@ -19,45 +19,47 @@ export default function PremiumModal({ onClose }: PremiumModalProps) {
   ]
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-700 max-w-md w-full p-6 relative animate-fade-in-up">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
         >
-          <X size={20} />
+          <X size={17} />
         </button>
 
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-[#1A73E8]/10 rounded-full mb-3">
-            <Lock className="text-[#1A73E8]" size={24} />
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl mb-4 shadow-lg shadow-blue-500/25">
+            <Sparkles className="text-white" size={22} />
           </div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.premium_title}</h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{t.premium_desc}</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.premium_title}</h2>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1.5 leading-relaxed">{t.premium_desc}</p>
         </div>
 
-        <div className="space-y-3 mb-6">
+        <div className="space-y-2.5 mb-6">
           {features.map((f) => (
-            <div key={f} className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
-              <Check size={16} className="text-green-500 flex-shrink-0" />
+            <div key={f} className="flex items-center gap-3 text-sm text-slate-700 dark:text-zinc-300">
+              <div className="w-5 h-5 bg-emerald-50 dark:bg-emerald-950/40 rounded-full flex items-center justify-center flex-shrink-0">
+                <Check size={11} className="text-emerald-500" />
+              </div>
               {f}
             </div>
           ))}
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <button className="flex flex-col items-center p-3 border-2 border-[#1A73E8] rounded-xl hover:bg-[#1A73E8]/5 transition-colors">
-            <span className="text-lg font-bold text-[#1A73E8]">$3.99</span>
-            <span className="text-xs text-slate-500">{t.premium_monthly}</span>
+          <button className="flex flex-col items-center p-4 border-2 border-slate-200 dark:border-zinc-700 rounded-2xl hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-950/10">
+            <span className="text-xl font-extrabold text-slate-900 dark:text-white">$3.99</span>
+            <span className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">{t.premium_monthly}</span>
           </button>
-          <button className="flex flex-col items-center p-3 bg-[#1A73E8] rounded-xl hover:bg-[#1557B0] transition-colors relative">
-            <span className="absolute -top-2 right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">Save 58%</span>
-            <span className="text-lg font-bold text-white">$19.99</span>
-            <span className="text-xs text-white/80">{t.premium_yearly}</span>
+          <button className="flex flex-col items-center p-4 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 relative shadow-lg shadow-blue-500/25">
+            <span className="absolute -top-2.5 right-3 bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold">Save 58%</span>
+            <span className="text-xl font-extrabold text-white">$19.99</span>
+            <span className="text-xs text-white/70 mt-0.5">{t.premium_yearly}</span>
           </button>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-4">{t.premium_cancel}</p>
+        <p className="text-center text-xs text-slate-400 dark:text-zinc-500 mt-4">{t.premium_cancel}</p>
       </div>
     </div>
   )

@@ -19,6 +19,8 @@ export const translations = {
     trust_2_desc: "All processing happens in your browser.",
     trust_3_title: "Zero Data Collection",
     trust_3_desc: "Nothing is stored on any server.",
+    how_label: "Simple Process",
+    how_subtitle: "3 simple steps, no login needed",
     how_title: "How It Works",
     how_step1_title: "Download Your Data",
     how_step1_desc: "Request your Instagram data export from the app settings.",
@@ -26,6 +28,11 @@ export const translations = {
     how_step2_desc: "Drag & drop your downloaded ZIP file into our analyzer.",
     how_step3_title: "See Results Instantly",
     how_step3_desc: "View who unfollowed you, mutual follows, and changes over time.",
+    why_label: "Why SafeUnfollow",
+    why_title: "Built with privacy first",
+    stat_ban: "Ban Risk",
+    final_cta_title: "Ready to see who unfollowed you?",
+    final_cta_sub: "Free — no credit card required",
 
     // Guide
     guide_title: "How to Download Your Instagram Data",
@@ -192,6 +199,8 @@ export const translations = {
     trust_2_desc: "모든 분석이 브라우저에서 이루어집니다.",
     trust_3_title: "데이터 수집 없음",
     trust_3_desc: "서버에 저장되는 정보는 일체 없습니다.",
+    how_label: "간단한 과정",
+    how_subtitle: "로그인 없이 3단계로 간편하게",
     how_title: "사용 방법",
     how_step1_title: "데이터 다운로드",
     how_step1_desc: "앱 설정에서 인스타그램 데이터 내보내기를 요청하세요.",
@@ -199,6 +208,11 @@ export const translations = {
     how_step2_desc: "다운로드한 ZIP 파일을 분석기에 드래그 앤 드롭하세요.",
     how_step3_title: "결과 즉시 확인",
     how_step3_desc: "언팔한 사람, 맞팔 목록, 시간별 변동을 확인하세요.",
+    why_label: "왜 SafeUnfollow인가",
+    why_title: "프라이버시를 최우선으로",
+    stat_ban: "계정 정지 위험",
+    final_cta_title: "누가 언팔했는지 확인할 준비 되셨나요?",
+    final_cta_sub: "무료 — 신용카드 불필요",
 
     // Guide
     guide_title: "인스타그램 데이터 다운로드 방법",
