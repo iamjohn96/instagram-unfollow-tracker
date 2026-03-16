@@ -7,11 +7,13 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { parseFile } from '@/utils/parser'
 import { db } from '@/utils/db'
+import { useTranslation } from '@/utils/i18n'
 
 type Status = 'idle' | 'parsing' | 'success' | 'error'
 
 export default function UploadPage() {
   const router = useRouter()
+  const { t } = useTranslation()
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
   const [dragging, setDragging] = useState(false)
@@ -20,13 +22,13 @@ export default function UploadPage() {
   const handleFile = useCallback(async (file: File) => {
     setStatus('parsing')
     setError('')
-    setProgress('Reading file...')
+    setProgress(t.upload_parsing)
 
     try {
-      setProgress('Parsing Instagram data...')
+      setProgress(t.upload_parsing_data)
       const { followers, following } = await parseFile(file)
 
-      setProgress('Saving snapshot...')
+      setProgress(t.upload_saving)
       const followersData: Record<string, number> = {}
       const followingData: Record<string, number> = {}
       followers.forEach((u) => { followersData[u.username] = u.timestamp })
@@ -58,7 +60,8 @@ export default function UploadPage() {
       setStatus('error')
       setError(err instanceof Error ? err.message : 'Failed to parse file. Please try again.')
     }
-  }, [router])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, t])
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -77,10 +80,8 @@ export default function UploadPage() {
       <Header />
 
       <main className="flex-1 max-w-xl mx-auto px-4 py-10 w-full">
-        <h1 className="text-2xl font-bold text-[#1E293B] dark:text-white mb-2">Upload Your Instagram Data</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">
-          Upload the ZIP file you downloaded from Instagram, or individual JSON files.
-        </p>
+        <h1 className="text-2xl font-bold text-[#1E293B] dark:text-white mb-2">{t.upload_title}</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">{t.upload_subtitle}</p>
 
         {/* Drop zone */}
         <label
@@ -101,9 +102,9 @@ export default function UploadPage() {
                 {dragging ? <FileArchive size={28} className="text-[#1A73E8]" /> : <Upload size={28} className="text-[#1A73E8]" />}
               </div>
               <div className="text-center">
-                <p className="font-semibold text-[#1E293B] dark:text-white">Drop your file here</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">or click to browse</p>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">Supports .zip and .json files</p>
+                <p className="font-semibold text-[#1E293B] dark:text-white">{t.upload_drag}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{t.upload_or}</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">{t.upload_supports}</p>
               </div>
             </>
           )}
@@ -118,18 +119,18 @@ export default function UploadPage() {
           {status === 'success' && (
             <div className="text-center">
               <CheckCircle size={40} className="text-green-500 mx-auto mb-2" />
-              <p className="font-semibold text-green-700 dark:text-green-400">Parsed successfully!</p>
+              <p className="font-semibold text-green-700 dark:text-green-400">{t.upload_success}</p>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{progress}</p>
-              <p className="text-xs text-slate-400 mt-1">Redirecting to dashboard...</p>
+              <p className="text-xs text-slate-400 mt-1">{t.upload_redirecting}</p>
             </div>
           )}
 
           {status === 'error' && (
             <div className="text-center">
               <AlertCircle size={40} className="text-red-500 mx-auto mb-2" />
-              <p className="font-semibold text-red-600 dark:text-red-400">Upload failed</p>
+              <p className="font-semibold text-red-600 dark:text-red-400">{t.upload_failed}</p>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xs">{error}</p>
-              <p className="text-xs text-[#1A73E8] mt-3">Click to try again</p>
+              <p className="text-xs text-[#1A73E8] mt-3">{t.upload_try_again}</p>
             </div>
           )}
         </label>
@@ -138,8 +139,8 @@ export default function UploadPage() {
         <div className="mt-6 flex items-start gap-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
           <Shield size={18} className="text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
           <div className="text-sm">
-            <p className="font-medium text-green-800 dark:text-green-300">Your file never leaves your device</p>
-            <p className="text-green-700 dark:text-green-400 mt-0.5">All processing happens 100% in your browser. We never upload your data to any server.</p>
+            <p className="font-medium text-green-800 dark:text-green-300">{t.upload_privacy_title}</p>
+            <p className="text-green-700 dark:text-green-400 mt-0.5">{t.upload_privacy_desc}</p>
           </div>
         </div>
       </main>

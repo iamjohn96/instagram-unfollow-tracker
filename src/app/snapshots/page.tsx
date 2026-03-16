@@ -7,8 +7,10 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PremiumModal from '@/components/PremiumModal'
 import { db, type Snapshot } from '@/utils/db'
+import { useTranslation } from '@/utils/i18n'
 
 export default function SnapshotsPage() {
+  const { t } = useTranslation()
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [showPremium, setShowPremium] = useState(false)
   const [deleting, setDeleting] = useState<number | null>(null)
@@ -35,10 +37,10 @@ export default function SnapshotsPage() {
       <main className="flex-1 max-w-2xl mx-auto px-4 py-8 w-full">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-xl font-bold text-[#1E293B] dark:text-white">Snapshot History</h1>
+            <h1 className="text-xl font-bold text-[#1E293B] dark:text-white">{t.snap_title}</h1>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              {snapshots.length} snapshot{snapshots.length !== 1 ? 's' : ''} saved
-              <span className="text-slate-400 dark:text-slate-500"> (Free: 1 max)</span>
+              {snapshots.length} {snapshots.length !== 1 ? t.snap_count_plural : t.snap_count_singular}
+              <span className="text-slate-400 dark:text-slate-500"> {t.snap_free_limit}</span>
             </p>
           </div>
           <Link
@@ -46,15 +48,15 @@ export default function SnapshotsPage() {
             className="flex items-center gap-1.5 text-sm bg-[#1A73E8] hover:bg-[#1557B0] text-white px-3 py-1.5 rounded-lg transition-colors"
           >
             <Upload size={14} />
-            New Snapshot
+            {t.snap_new}
           </Link>
         </div>
 
         {snapshots.length === 0 ? (
           <div className="text-center py-16">
             <Clock size={40} className="text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 dark:text-slate-400 text-sm">No snapshots yet. Upload your Instagram data to create one.</p>
-            <Link href="/upload" className="inline-block mt-4 text-[#1A73E8] text-sm hover:underline">Upload now →</Link>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">{t.snap_empty}</p>
+            <Link href="/upload" className="inline-block mt-4 text-[#1A73E8] text-sm hover:underline">{t.snap_upload_now}</Link>
           </div>
         ) : (
           <div className="space-y-3">
@@ -69,15 +71,15 @@ export default function SnapshotsPage() {
                     {new Date(snap.date).toLocaleString()}
                   </p>
                   <div className="flex gap-3 mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-                    <span>{snap.followers.length} followers</span>
-                    <span>{snap.following.length} following</span>
+                    <span>{snap.followers.length} {t.snap_followers}</span>
+                    <span>{snap.following.length} {t.snap_following}</span>
                   </div>
                 </div>
                 <button
                   onClick={() => snap.id && deleteSnapshot(snap.id)}
                   disabled={deleting === snap.id}
                   className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
-                  aria-label="Delete snapshot"
+                  aria-label={t.snap_delete_label}
                 >
                   <Trash2 size={16} />
                 </button>
@@ -91,16 +93,14 @@ export default function SnapshotsPage() {
           <div className="flex items-start gap-3">
             <Lock size={18} className="text-[#1A73E8] flex-shrink-0 mt-0.5" />
             <div className="flex-1">
-              <p className="font-semibold text-[#1E293B] dark:text-white text-sm">Compare Snapshots</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Upgrade to Premium to save unlimited snapshots and compare any two to see who unfollowed you over time.
-              </p>
+              <p className="font-semibold text-[#1E293B] dark:text-white text-sm">{t.snap_compare_title}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.snap_compare_desc}</p>
             </div>
             <button
               onClick={() => setShowPremium(true)}
               className="bg-[#1A73E8] hover:bg-[#1557B0] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0"
             >
-              Upgrade
+              {t.snap_upgrade}
             </button>
           </div>
         </div>

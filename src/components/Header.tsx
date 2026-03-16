@@ -3,9 +3,12 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Moon, Sun, Instagram } from 'lucide-react'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
+import { useTranslation } from '@/utils/i18n'
 
 export default function Header() {
   const [dark, setDark] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
@@ -36,19 +39,22 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
-          <Link href="/guide" className="hover:text-[#1A73E8] transition-colors">Guide</Link>
-          <Link href="/upload" className="hover:text-[#1A73E8] transition-colors">Upload</Link>
-          <Link href="/dashboard" className="hover:text-[#1A73E8] transition-colors">Dashboard</Link>
-          <Link href="/snapshots" className="hover:text-[#1A73E8] transition-colors">History</Link>
+          <Link href="/guide" className="hover:text-[#1A73E8] transition-colors">{t.nav_guide}</Link>
+          <Link href="/upload" className="hover:text-[#1A73E8] transition-colors">{t.nav_upload}</Link>
+          <Link href="/dashboard" className="hover:text-[#1A73E8] transition-colors">{t.nav_dashboard}</Link>
+          <Link href="/snapshots" className="hover:text-[#1A73E8] transition-colors">{t.nav_history}</Link>
         </nav>
 
-        <button
-          onClick={toggle}
-          className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300"
-          aria-label="Toggle dark mode"
-        >
-          {dark ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher />
+          <button
+            onClick={toggle}
+            className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300"
+            aria-label="Toggle dark mode"
+          >
+            {dark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </div>
       </div>
     </header>
   )

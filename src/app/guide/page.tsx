@@ -5,29 +5,31 @@ import Link from 'next/link'
 import { Smartphone, ChevronRight } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-
-const steps = [
-  { title: 'Open Instagram', desc: 'Tap your profile picture in the bottom right to go to your profile.' },
-  { title: 'Open the menu', desc: 'Tap the three-line menu (☰) in the top right corner.' },
-  { title: 'Go to Account Center', desc: 'Tap "Account Center" from the menu.' },
-  { title: 'Your information and permissions', desc: 'Tap "Your information and permissions".' },
-  { title: 'Download your information', desc: 'Tap "Download your information".' },
-  { title: 'Select your account', desc: 'Tap "Download or transfer information", then choose your Instagram account.' },
-  { title: 'Choose what to download', desc: 'Tap "Some of your information", then check "Followers and following" ONLY. Leave everything else unchecked.' },
-  { title: 'Set format and date range', desc: 'Select "Download to device". Change the Format to "JSON" (not HTML). Set Date range to "All time".' },
-  { title: 'Request and download', desc: 'Tap "Create files". Instagram will email you when ready (usually minutes to a few hours). Open that email and download the ZIP file.' },
-]
+import { useTranslation } from '@/utils/i18n'
 
 export default function GuidePage() {
   const [platform, setPlatform] = useState<'ios' | 'android'>('ios')
+  const { t } = useTranslation()
+
+  const steps = [
+    { title: t.guide_step1_title, desc: t.guide_step1_desc },
+    { title: t.guide_step2_title, desc: t.guide_step2_desc },
+    { title: t.guide_step3_title, desc: t.guide_step3_desc },
+    { title: t.guide_step4_title, desc: t.guide_step4_desc },
+    { title: t.guide_step5_title, desc: t.guide_step5_desc },
+    { title: t.guide_step6_title, desc: t.guide_step6_desc },
+    { title: t.guide_step7_title, desc: t.guide_step7_desc },
+    { title: t.guide_step8_title, desc: t.guide_step8_desc },
+    { title: t.guide_step9_title, desc: t.guide_step9_desc },
+  ]
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
 
       <main className="flex-1 max-w-2xl mx-auto px-4 py-10 w-full">
-        <h1 className="text-2xl font-bold text-[#1E293B] dark:text-white mb-2">How to Download Your Instagram Data</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Follow these steps to get your followers &amp; following data from Instagram.</p>
+        <h1 className="text-2xl font-bold text-[#1E293B] dark:text-white mb-2">{t.guide_title}</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">{t.guide_subtitle}</p>
 
         {/* Platform toggle */}
         <div className="flex gap-2 mb-4">
@@ -42,11 +44,11 @@ export default function GuidePage() {
               }`}
             >
               <Smartphone size={15} />
-              {p === 'ios' ? 'iPhone (iOS)' : 'Android'}
+              {p === 'ios' ? t.guide_tab_ios : t.guide_tab_android}
             </button>
           ))}
         </div>
-        <p className="text-xs text-slate-400 dark:text-slate-500 mb-8">The steps are identical on iOS and Android.</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mb-8">{t.guide_platforms_note}</p>
 
         {/* Steps */}
         <div className="space-y-4 mb-10">
@@ -65,7 +67,7 @@ export default function GuidePage() {
 
         {/* Note about JSON */}
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl p-4 mb-8 text-sm text-amber-800 dark:text-amber-300">
-          <strong>Important:</strong> Make sure to select <strong>JSON</strong> format (not HTML). Our tool only supports JSON files.
+          <strong>{t.guide_json_warning_label}</strong> {t.guide_json_warning}
         </div>
 
         <div className="text-center">
@@ -73,7 +75,7 @@ export default function GuidePage() {
             href="/upload"
             className="inline-flex items-center gap-2 bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-blue-200 dark:shadow-none"
           >
-            I Already Have My File
+            {t.guide_skip}
             <ChevronRight size={18} />
           </Link>
         </div>
