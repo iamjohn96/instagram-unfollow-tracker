@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import { I18nProvider } from '@/utils/i18n'
 
@@ -37,6 +38,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <meta name="theme-color" content="#2563EB" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-8QW7KP3MZ7" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8QW7KP3MZ7');
+          `}
+        </Script>
       </head>
       <body suppressHydrationWarning className="bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased">
         <I18nProvider>
