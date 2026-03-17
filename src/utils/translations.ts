@@ -135,6 +135,17 @@ export const translations = {
     premium_feature_4: "Change history timeline",
     premium_feature_5: "Email digest reports",
 
+    // FAQ
+    faq_title: "Frequently Asked Questions",
+    faq_q1: "Is SafeUnfollow safe to use?",
+    faq_a1: "Yes. SafeUnfollow never asks for your Instagram password. All data is processed 100% in your browser and never sent to any server.",
+    faq_q2: "Will I get banned for using SafeUnfollow?",
+    faq_a2: "No. SafeUnfollow uses Instagram's official data export feature. It does not interact with Instagram's API or automate any actions on your account.",
+    faq_q3: "How do I check who unfollowed me on Instagram?",
+    faq_a3: "Download your Instagram data as JSON from Settings > Account Center > Your Information > Download Your Information. Then upload the file to SafeUnfollow to instantly see who unfollowed you.",
+    faq_q4: "Is it free?",
+    faq_a4: "Yes. Basic unfollow tracking is completely free. Premium features like unlimited snapshots and CSV export are available for $3.99/month.",
+
     // Footer
     footer_privacy: "Privacy Policy",
     footer_terms: "Terms of Service",
@@ -314,6 +325,17 @@ export const translations = {
     premium_feature_3: "상세 분석 & 차트",
     premium_feature_4: "변동 이력 타임라인",
     premium_feature_5: "이메일 다이제스트 리포트",
+
+    // FAQ
+    faq_title: "자주 묻는 질문",
+    faq_q1: "SafeUnfollow은 안전한가요?",
+    faq_a1: "네. SafeUnfollow은 인스타그램 비밀번호를 절대 요구하지 않습니다. 모든 데이터는 브라우저에서 100% 처리되며 서버로 전송되지 않습니다.",
+    faq_q2: "계정이 정지될 수 있나요?",
+    faq_a2: "아니요. 인스타그램 공식 데이터 내보내기 기능을 사용합니다. 인스타그램 API와 상호작용하거나 계정에서 자동화된 작업을 수행하지 않습니다.",
+    faq_q3: "누가 언팔했는지 어떻게 확인하나요?",
+    faq_a3: "인스타그램에서 JSON 형식으로 데이터를 다운로드한 후 설정 > 계정 센터 > 내 정보 및 권한 > 내 정보 내보내기에서 파일을 요청하세요. 그런 다음 SafeUnfollow에 파일을 업로드하면 누가 언팔했는지 즉시 확인할 수 있습니다.",
+    faq_q4: "무료인가요?",
+    faq_a4: "네. 기본 언팔 추적은 완전 무료입니다. 무제한 스냅샷 및 CSV 내보내기 등 프리미엄 기능은 월 $3.99에 이용 가능합니다.",
 
     // Footer
     footer_privacy: "개인정보처리방침",

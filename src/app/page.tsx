@@ -1,16 +1,72 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { Shield, Lock, Server, Download, Upload, BarChart3, ArrowRight, CheckCircle } from 'lucide-react'
+import { Shield, Lock, Server, Download, Upload, BarChart3, ArrowRight, CheckCircle, ChevronDown } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useTranslation } from '@/utils/i18n'
 
+const webAppJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'SafeUnfollow',
+  url: 'https://safeunfollow.com',
+  description: 'The safest Instagram unfollow tracker. See who unfollowed you without login or ban risk.',
+  applicationCategory: 'SocialNetworkingApplication',
+  operatingSystem: 'Web',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  featureList: [
+    'Instagram unfollow tracking',
+    'No login required',
+    '100% client-side processing',
+    'Snapshot comparison',
+    'Multi-language support',
+  ],
+}
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is SafeUnfollow safe to use?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Yes. SafeUnfollow never asks for your Instagram password. All data is processed 100% in your browser and never sent to any server.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Will I get banned for using SafeUnfollow?',
+      acceptedAnswer: { '@type': 'Answer', text: "No. SafeUnfollow uses Instagram's official data export feature. It does not interact with Instagram's API or automate any actions on your account." },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I check who unfollowed me on Instagram?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Download your Instagram data as JSON from Settings > Account Center > Your Information > Download Your Information. Then upload the file to SafeUnfollow to instantly see who unfollowed you.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is SafeUnfollow free?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Yes. Basic unfollow tracking is completely free. Premium features like unlimited snapshots and CSV export are available for $3.99/month.' },
+    },
+  ],
+}
+
 export default function Home() {
   const { t } = useTranslation()
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
+  const faqItems = [
+    { q: t.faq_q1, a: t.faq_a1 },
+    { q: t.faq_q2, a: t.faq_a2 },
+    { q: t.faq_q3, a: t.faq_a3 },
+    { q: t.faq_q4, a: t.faq_a4 },
+  ]
 
   return (
     <div className="flex flex-col min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Header />
 
       <main className="flex-1">
@@ -142,6 +198,38 @@ export default function Home() {
                 <Icon size={22} className={`${iconColor} mx-auto mb-3`} />
                 <p className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">{stat}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 py-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">{t.faq_title}</h2>
+          </div>
+          <div className="max-w-2xl mx-auto space-y-3">
+            {faqItems.map(({ q, a }, i) => (
+              <div
+                key={i}
+                className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between px-6 py-4 text-left gap-4"
+                  aria-expanded={openFaq === i}
+                >
+                  <span className="font-semibold text-slate-900 dark:text-white text-sm">{q}</span>
+                  <ChevronDown
+                    size={16}
+                    className={`flex-shrink-0 text-slate-400 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {openFaq === i && (
+                  <div className="px-6 pb-5">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{a}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
