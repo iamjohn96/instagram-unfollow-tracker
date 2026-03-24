@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     canonical: 'https://safeunfollow.com',
   },
   other: {
-    'og:locale:alternate': 'ko_KR',
+    'og:locale:alternate': ['ko_KR', 'ja_JP', 'es_ES'],
   },
 }
 

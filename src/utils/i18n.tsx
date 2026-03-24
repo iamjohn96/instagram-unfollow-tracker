@@ -20,10 +20,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('safeunfollow-lang') as Locale
-    if (saved === 'en' || saved === 'ko') {
+    if (saved === 'en' || saved === 'ko' || saved === 'ja' || saved === 'es') {
       setLocaleState(saved)
     } else if (navigator.language.startsWith('ko')) {
       setLocaleState('ko')
+    } else if (navigator.language.startsWith('ja')) {
+      setLocaleState('ja')
+    } else if (navigator.language.startsWith('es')) {
+      setLocaleState('es')
     }
   }, [])
 
