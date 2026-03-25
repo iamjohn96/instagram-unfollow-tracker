@@ -105,14 +105,24 @@ export default function SnapshotsPage() {
               <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.snap_compare_title}</p>
               <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{t.snap_compare_desc}</p>
             </div>
-            <a
-              href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02]"
-            >
-              {t.snap_upgrade}
-            </a>
+            <div className="flex gap-2 flex-shrink-0">
+              <a
+                href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+              >
+                {t.upgrade_monthly}
+              </a>
+              <a
+                href="https://safeunfollow.lemonsqueezy.com/checkout/buy/eea09f76-d8e4-4bbc-899c-38d70bec7cba"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm whitespace-nowrap"
+              >
+                {t.upgrade_yearly}
+              </a>
+            </div>
           </div>
         </div>
       </main>
