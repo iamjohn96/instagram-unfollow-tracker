@@ -5,14 +5,12 @@ import { Trash2, Clock, Lock, Upload, Users, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PremiumModal from '@/components/PremiumModal'
 import { db, type Snapshot } from '@/utils/db'
 import { useTranslation } from '@/utils/i18n'
 
 export default function SnapshotsPage() {
   const { t } = useTranslation()
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
-  const [showPremium, setShowPremium] = useState(false)
   const [deleting, setDeleting] = useState<number | null>(null)
 
   const load = async () => {
@@ -32,8 +30,6 @@ export default function SnapshotsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      {showPremium && <PremiumModal onClose={() => setShowPremium(false)} />}
-
       <main className="flex-1 max-w-2xl mx-auto px-4 sm:px-6 py-10 w-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-8 animate-fade-in-up">
@@ -109,12 +105,14 @@ export default function SnapshotsPage() {
               <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.snap_compare_title}</p>
               <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{t.snap_compare_desc}</p>
             </div>
-            <button
-              onClick={() => setShowPremium(true)}
+            <a
+              href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e?checkout[custom][email]="
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02]"
             >
               {t.snap_upgrade}
-            </button>
+            </a>
           </div>
         </div>
       </main>

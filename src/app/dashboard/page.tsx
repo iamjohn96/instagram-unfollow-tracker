@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { Users, UserMinus, UserPlus, ArrowLeftRight, Search, ExternalLink, Lock, Upload, BookmarkPlus, Check, ChevronDown } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PremiumModal from '@/components/PremiumModal'
 import { analyze, compareSnapshots } from '@/utils/analyzer'
 import type { InstagramUser } from '@/utils/parser'
 import { db, type Snapshot } from '@/utils/db'
@@ -63,7 +62,6 @@ export default function DashboardPage() {
   const [tab, setTab] = useState<Tab>('notFollowingBack')
   const [sort, setSort] = useState<SortKey>('alpha')
   const [search, setSearch] = useState('')
-  const [showPremium, setShowPremium] = useState(false)
   const [prevSnapshot, setPrevSnapshot] = useState<Snapshot | null | undefined>(undefined)
   const [todaySnapshot, setTodaySnapshot] = useState<Snapshot | null | undefined>(undefined)
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle')
@@ -187,8 +185,6 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      {showPremium && <PremiumModal onClose={() => setShowPremium(false)} />}
-
       <main className="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full">
         {/* Page header */}
         <div className="flex items-center justify-between mb-8 animate-fade-in-up">
@@ -375,12 +371,14 @@ export default function DashboardPage() {
             <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.dash_premium_title}</p>
             <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{t.dash_premium_desc}</p>
           </div>
-          <button
-            onClick={() => setShowPremium(true)}
+          <a
+            href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e?checkout[custom][email]="
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm"
           >
             {t.dash_upgrade}
-          </button>
+          </a>
         </div>
       </main>
 
