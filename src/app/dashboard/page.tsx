@@ -372,7 +372,7 @@ export default function DashboardPage() {
             <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{t.dash_premium_desc}</p>
           </div>
           <a
-            href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e?checkout[custom][email]="
+            href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm"
