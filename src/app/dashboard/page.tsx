@@ -216,11 +216,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Save snapshot */}
-        <div className="flex justify-center mb-8 animate-fade-in-up animate-delay-200">
+        <div className="flex flex-col items-center mb-8 animate-fade-in-up animate-delay-200">
           <button
             onClick={saveSnapshot}
             disabled={saveState === 'saving'}
-            className={`inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:scale-[1.02] ${
+            className={`w-full max-w-sm inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:scale-[1.02] ${
               saveState === 'saved'
                 ? 'bg-emerald-500 text-white shadow-emerald-500/20'
                 : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20'
@@ -234,7 +234,7 @@ export default function DashboardPage() {
               <><BookmarkPlus size={15} /> {t.dash_save_snapshot}</>
             )}
           </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-2">{t.dash_snapshot_hint}</p>
+          <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 text-center mt-3">{t.dash_snapshot_hint}</p>
         </div>
 
         {/* Tabs */}
