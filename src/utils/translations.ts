@@ -107,6 +107,7 @@ export const translations = {
     dash_save_snapshot: "Save Snapshot",
     dash_snapshot_saved: "Snapshot saved!",
     dash_snapshot_update: "Update snapshot?",
+    dash_snapshot_hint: "Save a snapshot, then upload new data to see who unfollowed you in the Changes tab.",
 
     // Snapshots
     snap_title: "Snapshot History",
@@ -300,6 +301,7 @@ export const translations = {
     dash_save_snapshot: "스냅샷 저장",
     dash_snapshot_saved: "스냅샷 저장 완료!",
     dash_snapshot_update: "스냅샷 업데이트?",
+    dash_snapshot_hint: "스냅샷을 저장한 후 새 데이터를 업로드하면 변동 사항 탭에서 누가 언팔했는지 확인할 수 있습니다.",
 
     // Snapshots
     snap_title: "스냅샷 기록",
@@ -507,6 +509,7 @@ export const translations = {
     dash_no_changes: "前回のスナップショットから変動なし",
     dash_snapshot_saved: "スナップショット保存済み！",
     dash_snapshot_update: "スナップショットを更新しますか？",
+    dash_snapshot_hint: "スナップショットを保存してから新しいデータをアップロードすると、変動タブでフォロー解除した人を確認できます。",
     dash_no_snapshot: "以前のスナップショットがありません。スナップショットを保存して変動を追跡しましょう！",
 
     // Snapshots
@@ -718,6 +721,7 @@ export const translations = {
     dash_no_changes: "Sin cambios desde la última instantánea",
     dash_snapshot_saved: "¡Instantánea guardada!",
     dash_snapshot_update: "¿Actualizar instantánea?",
+    dash_snapshot_hint: "Guarda una instantánea y luego sube nuevos datos para ver quién dejó de seguirte en la pestaña Cambios.",
     dash_no_snapshot: "No se encontró instantánea anterior. ¡Guarda una para rastrear cambios con el tiempo!",
 
     // Snapshots

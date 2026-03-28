@@ -234,6 +234,7 @@ export default function DashboardPage() {
               <><BookmarkPlus size={15} /> {t.dash_save_snapshot}</>
             )}
           </button>
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-2">{t.dash_snapshot_hint}</p>
         </div>
 
         {/* Tabs */}
