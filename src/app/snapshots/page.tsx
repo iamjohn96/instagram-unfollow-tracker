@@ -107,7 +107,7 @@ export default function SnapshotsPage() {
             </div>
             <div className="flex gap-2 flex-shrink-0">
               <a
-                href="https://safeunfollow.lemonsqueezy.com/checkout/buy/7fe88ebd-96b3-4901-9218-859959cfc02e"
+                href="https://test.checkout.dodopayments.com/buy/pdt_0NbSkuibIZxlDbZtx2q1E?quantity=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-shrink-0 border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
@@ -115,7 +115,7 @@ export default function SnapshotsPage() {
                 {t.upgrade_monthly}
               </a>
               <a
-                href="https://safeunfollow.lemonsqueezy.com/checkout/buy/eea09f76-d8e4-4bbc-899c-38d70bec7cba"
+                href="https://test.checkout.dodopayments.com/buy/pdt_0NbSl0lX7wtIziey1Iy6H?quantity=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm whitespace-nowrap"
