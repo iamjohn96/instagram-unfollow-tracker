@@ -54,7 +54,7 @@ const faqJsonLd = {
 
 export default function Home() {
   const { t, locale } = useTranslation()
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   const faqItems = [
     { q: t.faq_q1, a: t.faq_a1 },

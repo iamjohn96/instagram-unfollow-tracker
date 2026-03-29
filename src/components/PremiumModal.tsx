@@ -49,7 +49,7 @@ export default function PremiumModal({ onClose }: PremiumModalProps) {
 
         <div className="grid grid-cols-2 gap-3">
           <a
-            href="https://test.checkout.dodopayments.com/buy/pdt_0NbSkuibIZxlDbZtx2q1E?quantity=1"
+            href="https://checkout.dodopayments.com/buy/pdt_0NbWskBGarEniKABARtpq?quantity=1"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center p-4 border-2 border-slate-200 dark:border-zinc-700 rounded-2xl hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-950/10"
@@ -58,7 +58,7 @@ export default function PremiumModal({ onClose }: PremiumModalProps) {
             <span className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">{t.premium_monthly}</span>
           </a>
           <a
-            href="https://test.checkout.dodopayments.com/buy/pdt_0NbSl0lX7wtIziey1Iy6H?quantity=1"
+            href="https://checkout.dodopayments.com/buy/pdt_0NbWsnlHHbhazcQwjwDSV?quantity=1"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center p-4 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 relative shadow-lg shadow-blue-500/25"
