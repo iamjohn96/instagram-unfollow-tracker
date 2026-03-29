@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Users, UserMinus, UserPlus, ArrowLeftRight, Search, ExternalLink, Lock, Upload, BookmarkPlus, Check, ChevronDown } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import PremiumModal from '@/components/PremiumModal'
 import { analyze, compareSnapshots } from '@/utils/analyzer'
 import type { InstagramUser } from '@/utils/parser'
 import { db, type Snapshot } from '@/utils/db'
@@ -65,6 +66,12 @@ export default function DashboardPage() {
   const [prevSnapshot, setPrevSnapshot] = useState<Snapshot | null | undefined>(undefined)
   const [todaySnapshot, setTodaySnapshot] = useState<Snapshot | null | undefined>(undefined)
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle')
+  const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
+
+  useEffect(() => {
+    setIsPremiumUser(localStorage.getItem('isPremium') === 'true')
+  }, [])
 
   useEffect(() => {
     const f = sessionStorage.getItem('ig_followers')
@@ -93,6 +100,13 @@ export default function DashboardPage() {
   }, [])
 
   const saveSnapshot = async () => {
+    if (!isPremiumUser && !todaySnapshot) {
+      const count = await db.snapshots.count()
+      if (count >= 1) {
+        setShowPremiumModal(true)
+        return
+      }
+    }
     setSaveState('saving')
     const now = new Date()
     const label = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
@@ -286,46 +300,98 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {changes.lostFollowers.length > 0 && (
-                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
-                  <p className="text-xs font-bold text-red-500 uppercase tracking-wider mb-2">{t.dash_new_unfollowers}</p>
-                  <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
-                    {changes.lostFollowers.map((u) => (
-                      <li key={u.username} className="py-3">
-                        <a
-                          href={`https://www.instagram.com/${u.username}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-medium text-red-500 hover:underline text-sm flex items-center gap-1.5"
-                        >
-                          @{u.username}
-                          <ExternalLink size={11} className="opacity-60" />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+              {!isPremiumUser ? (
+                <div className="relative rounded-2xl overflow-hidden">
+                  <div className="space-y-3 blur-sm pointer-events-none select-none opacity-60" aria-hidden="true">
+                    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 px-4 pt-4 pb-2">
+                      <p className="text-xs font-bold text-red-500 uppercase tracking-wider mb-2">{t.dash_new_unfollowers}</p>
+                      {[...Array(Math.min(changes.lostFollowers.length, 3))].map((_, i) => (
+                        <div key={i} className="py-3 border-t border-slate-100 dark:border-zinc-800 first:border-0">
+                          <div className="w-28 h-4 bg-slate-200 dark:bg-zinc-700 rounded" />
+                        </div>
+                      ))}
+                    </div>
+                    {changes.gainedFollowers.length > 0 && (
+                      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 px-4 pt-4 pb-2">
+                        <p className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">{t.dash_new_followers}</p>
+                        {[...Array(Math.min(changes.gainedFollowers.length, 2))].map((_, i) => (
+                          <div key={i} className="py-3 border-t border-slate-100 dark:border-zinc-800 first:border-0">
+                            <div className="w-24 h-4 bg-slate-200 dark:bg-zinc-700 rounded" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-6 text-center">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                      <Lock size={18} className="text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.dash_premium_title}</p>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">{t.dash_premium_desc}</p>
+                    <div className="flex gap-2 mt-1">
+                      <a
+                        href="https://test.checkout.dodopayments.com/buy/pdt_0NbSkuibIZxlDbZtx2q1E?quantity=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 whitespace-nowrap"
+                      >
+                        {t.upgrade_monthly}
+                      </a>
+                      <a
+                        href="https://test.checkout.dodopayments.com/buy/pdt_0NbSl0lX7wtIziey1Iy6H?quantity=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 shadow-sm whitespace-nowrap"
+                      >
+                        {t.upgrade_yearly}
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              )}
+              ) : (
+                <>
+                  {changes.lostFollowers.length > 0 && (
+                    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
+                      <p className="text-xs font-bold text-red-500 uppercase tracking-wider mb-2">{t.dash_new_unfollowers}</p>
+                      <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
+                        {changes.lostFollowers.map((u) => (
+                          <li key={u.username} className="py-3">
+                            <a
+                              href={`https://www.instagram.com/${u.username}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-red-500 hover:underline text-sm flex items-center gap-1.5"
+                            >
+                              @{u.username}
+                              <ExternalLink size={11} className="opacity-60" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-              {changes.gainedFollowers.length > 0 && (
-                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
-                  <p className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">{t.dash_new_followers}</p>
-                  <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
-                    {changes.gainedFollowers.map((u) => (
-                      <li key={u.username} className="py-3">
-                        <a
-                          href={`https://www.instagram.com/${u.username}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-medium text-emerald-500 hover:underline text-sm flex items-center gap-1.5"
-                        >
-                          @{u.username}
-                          <ExternalLink size={11} className="opacity-60" />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  {changes.gainedFollowers.length > 0 && (
+                    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm px-4 pt-4 pb-2">
+                      <p className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">{t.dash_new_followers}</p>
+                      <ul className="divide-y divide-slate-100 dark:divide-zinc-800">
+                        {changes.gainedFollowers.map((u) => (
+                          <li key={u.username} className="py-3">
+                            <a
+                              href={`https://www.instagram.com/${u.username}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-emerald-500 hover:underline text-sm flex items-center gap-1.5"
+                            >
+                              @{u.username}
+                              <ExternalLink size={11} className="opacity-60" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ) : changes ? (
@@ -394,6 +460,7 @@ export default function DashboardPage() {
       </main>
 
       <Footer />
+      {showPremiumModal && <PremiumModal onClose={() => setShowPremiumModal(false)} />}
     </div>
   )
 }

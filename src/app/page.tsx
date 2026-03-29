@@ -53,7 +53,7 @@ const faqJsonLd = {
 }
 
 export default function Home() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   const faqItems = [
@@ -84,7 +84,13 @@ export default function Home() {
 
             {/* Title */}
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6 animate-fade-in-up animate-delay-100">
-              {t.hero_title}
+              {locale === 'en' ? (
+                <>The Safest Instagram<br />Unfollow Tracker</>
+              ) : locale === 'ja' ? (
+                <>最も安全なInstagramフォロー<br />解除トラッカー</>
+              ) : (
+                t.hero_title
+              )}
             </h1>
 
             <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-10 leading-relaxed animate-fade-in-up animate-delay-200">
