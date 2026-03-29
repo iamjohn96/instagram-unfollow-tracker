@@ -77,9 +77,15 @@ export default function Home() {
 
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-28 md:py-40 text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white dark:bg-zinc-900 border border-blue-200 dark:border-blue-900/60 text-blue-600 dark:text-blue-400 text-sm px-4 py-1.5 rounded-full mb-8 font-medium shadow-sm shadow-blue-100/50 dark:shadow-none animate-fade-in-up">
-              <Shield size={14} />
-              {t.hero_badge}
+            <div className="flex flex-col items-center gap-2 mb-8 animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-zinc-900 border border-blue-200 dark:border-blue-900/60 text-blue-600 dark:text-blue-400 text-sm px-4 py-1.5 rounded-full font-medium shadow-sm shadow-blue-100/50 dark:shadow-none">
+                <Shield size={14} />
+                {t.hero_badge}
+              </div>
+              <div className="inline-flex items-center gap-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-xs px-3 py-1 rounded-full">
+                <span>●</span>
+                {t.hero_social_proof}
+              </div>
             </div>
 
             {/* Title */}
@@ -193,9 +199,9 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
-              { stat: '100%', label: t.trust_1_title, icon: CheckCircle, iconColor: 'text-blue-500' },
-              { stat: '0', label: t.stat_ban, icon: Shield, iconColor: 'text-emerald-500' },
-              { stat: '∞', label: t.trust_2_title, icon: Server, iconColor: 'text-cyan-500' },
+              { stat: '122+', label: t.stat_users, icon: CheckCircle, iconColor: 'text-blue-500' },
+              { stat: '7+', label: t.stat_countries, icon: Server, iconColor: 'text-cyan-500' },
+              { stat: '0%', label: t.stat_ban, icon: Shield, iconColor: 'text-emerald-500' },
             ].map(({ stat, label, icon: Icon, iconColor }, i) => (
               <div
                 key={label}

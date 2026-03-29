@@ -8,6 +8,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% Safe - No Login Required",
+    hero_social_proof: "Trusted by 120+ users worldwide",
     hero_title: "The Safest Instagram Unfollow Tracker",
     hero_subtitle: "No login. No ban risk. Your data never leaves your device. Find out who stopped following you instantly.",
     hero_cta: "Start Free Analysis",
@@ -30,6 +31,8 @@ export const translations = {
     how_step3_desc: "View who unfollowed you, mutual follows, and changes over time.",
     why_label: "Why SafeUnfollow",
     why_title: "Built with privacy first",
+    stat_users: "Users Analyzed",
+    stat_countries: "Countries",
     stat_ban: "Ban Risk",
     final_cta_title: "Ready to see who unfollowed you?",
     final_cta_sub: "Free — no credit card required",
@@ -202,6 +205,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% 안전 - 로그인 불필요",
+    hero_social_proof: "전 세계 120명+ 이용 중",
     hero_title: "가장 안전한 인스타그램 언팔 추적기",
     hero_subtitle: "로그인 없이, 계정 정지 위험 없이. 데이터는 기기에서만 처리됩니다. 누가 언팔했는지 바로 확인하세요.",
     hero_cta: "무료 분석 시작",
@@ -224,6 +228,8 @@ export const translations = {
     how_step3_desc: "언팔한 사람, 맞팔 목록, 시간별 변동을 확인하세요.",
     why_label: "왜 SafeUnfollow인가",
     why_title: "프라이버시를 최우선으로",
+    stat_users: "분석된 사용자",
+    stat_countries: "국가",
     stat_ban: "계정 정지 위험",
     final_cta_title: "누가 언팔했는지 확인할 준비 되셨나요?",
     final_cta_sub: "무료 — 신용카드 불필요",
@@ -396,6 +402,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100%安全 - ログイン不要",
+    hero_social_proof: "世界120人以上が利用中",
     hero_title: "最も安全なInstagramフォロー解除トラッカー",
     hero_subtitle: "ログイン不要、アカウント停止リスクなし。データはお使いの端末でのみ処理されます。フォロー解除した人をすぐに確認できます。",
     hero_cta: "無料分析を開始",
@@ -418,6 +425,8 @@ export const translations = {
     how_step3_desc: "フォロー解除した人をすぐに確認",
     why_label: "なぜSAFEUNFOLLOWなのか",
     why_title: "プライバシー最優先で構築",
+    stat_users: "利用ユーザー数",
+    stat_countries: "対応国",
     stat_ban: "アカウント停止リスク 0",
     final_cta_title: "フォロー解除した人を確認する準備はできましたか？",
     final_cta_sub: "無料 — クレジットカード不要",
@@ -608,6 +617,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% Seguro - Sin inicio de sesión",
+    hero_social_proof: "Más de 120 usuarios en todo el mundo",
     hero_title: "El rastreador de unfollows de Instagram más seguro",
     hero_subtitle: "Sin inicio de sesión. Sin riesgo de baneo. Tus datos nunca salen de tu dispositivo. Descubre quién dejó de seguirte al instante.",
     hero_cta: "Análisis gratuito",
@@ -630,6 +640,8 @@ export const translations = {
     how_step3_desc: "Descubre quién dejó de seguirte al instante",
     why_label: "POR QUÉ SAFEUNFOLLOW",
     why_title: "Construido con la privacidad primero",
+    stat_users: "Usuarios analizados",
+    stat_countries: "Países",
     stat_ban: "0 Riesgo de baneo",
     final_cta_title: "¿Listo para ver quién dejó de seguirte?",
     final_cta_sub: "Gratis — sin tarjeta de crédito",
