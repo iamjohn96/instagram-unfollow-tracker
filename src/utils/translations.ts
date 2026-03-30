@@ -138,9 +138,7 @@ export const translations = {
     premium_cancel: "Cancel anytime. No hidden fees.",
     premium_feature_1: "Unlimited snapshots",
     premium_feature_2: "CSV export of all lists",
-    premium_feature_3: "Detailed analytics & charts",
     premium_feature_4: "Change history timeline",
-    premium_feature_5: "Email digest reports",
 
     // FAQ
     faq_title: "Frequently Asked Questions",
@@ -336,9 +334,7 @@ export const translations = {
     premium_cancel: "언제든 취소 가능. 숨겨진 요금 없음.",
     premium_feature_1: "무제한 스냅샷",
     premium_feature_2: "전체 목록 CSV 내보내기",
-    premium_feature_3: "상세 분석 & 차트",
     premium_feature_4: "변동 이력 타임라인",
-    premium_feature_5: "이메일 다이제스트 리포트",
 
     // FAQ
     faq_title: "자주 묻는 질문",
@@ -552,9 +548,7 @@ export const translations = {
     premium_cancel: "いつでもキャンセル可能。隠れた料金なし。",
     premium_feature_1: "無制限スナップショット",
     premium_feature_2: "全リストのCSVエクスポート",
-    premium_feature_3: "詳細分析＆チャート",
     premium_feature_4: "変動履歴タイムライン",
-    premium_feature_5: "メールダイジェストレポート",
 
     // FAQ
     faq_title: "よくある質問",
@@ -768,9 +762,7 @@ export const translations = {
     premium_cancel: "Cancela en cualquier momento. Sin tarifas ocultas.",
     premium_feature_1: "Instantáneas ilimitadas",
     premium_feature_2: "Exportación CSV de todas las listas",
-    premium_feature_3: "Análisis detallados y gráficos",
     premium_feature_4: "Línea de tiempo del historial de cambios",
-    premium_feature_5: "Informes de resumen por correo electrónico",
 
     // FAQ
     faq_title: "Preguntas frecuentes",

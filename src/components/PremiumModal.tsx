@@ -13,9 +13,7 @@ export default function PremiumModal({ onClose }: PremiumModalProps) {
   const features = [
     t.premium_feature_1,
     t.premium_feature_2,
-    t.premium_feature_3,
     t.premium_feature_4,
-    t.premium_feature_5,
   ]
 
   return (
