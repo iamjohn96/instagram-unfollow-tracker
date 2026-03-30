@@ -104,13 +104,21 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
-              <Link
-                href="/guide"
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-lg shadow-blue-500/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/30"
-              >
-                {t.hero_cta}
-                <ArrowRight size={18} />
-              </Link>
+              <div className="flex flex-col items-center">
+                <Link
+                  href="/guide"
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-lg shadow-blue-500/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/30"
+                >
+                  {t.hero_cta}
+                  <ArrowRight size={18} />
+                </Link>
+                <a
+                  href="/upload"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-3 block text-center"
+                >
+                  {t.hero_have_file}
+                </a>
+              </div>
               <a
                 href="#how-it-works"
                 className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
