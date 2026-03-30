@@ -77,7 +77,7 @@ export default function UploadPage() {
               : 'border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-950/10'
           }`}
         >
-          <input type="file" accept=".json" className="sr-only" onChange={onInputChange} />
+          <input type="file" accept=".zip,.json" className="sr-only" onChange={onInputChange} />
 
           {status === 'idle' && (
             <>
