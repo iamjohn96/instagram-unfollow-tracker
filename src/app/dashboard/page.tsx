@@ -467,7 +467,12 @@ export default function DashboardPage() {
       </main>
 
       <Footer />
-      {showPremiumModal && <PremiumModal onClose={() => setShowPremiumModal(false)} />}
+      {showPremiumModal && (
+        <PremiumModal
+          onClose={() => setShowPremiumModal(false)}
+          onPremiumActivated={() => setIsPremiumUser(true)}
+        />
+      )}
     </div>
   )
 }

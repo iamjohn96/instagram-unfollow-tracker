@@ -1,14 +1,36 @@
 'use client'
 
+import { useState } from 'react'
 import { X, Check, Sparkles } from 'lucide-react'
 import { useTranslation } from '@/utils/i18n'
+import { checkPremiumStatus } from '@/utils/premiumCheck'
 
 interface PremiumModalProps {
   onClose: () => void
+  onPremiumActivated?: () => void
 }
 
-export default function PremiumModal({ onClose }: PremiumModalProps) {
+export default function PremiumModal({ onClose, onPremiumActivated }: PremiumModalProps) {
   const { t } = useTranslation()
+  const [verifyEmail, setVerifyEmail] = useState('')
+  const [verifyState, setVerifyState] = useState<'idle' | 'checking' | 'found' | 'notfound'>('idle')
+
+  const handleVerify = async () => {
+    if (!verifyEmail.trim()) return
+    setVerifyState('checking')
+    const isPremium = await checkPremiumStatus(verifyEmail.trim())
+    if (isPremium) {
+      localStorage.setItem('isPremium', 'true')
+      localStorage.setItem('premiumEmail', verifyEmail.trim().toLowerCase())
+      setVerifyState('found')
+      setTimeout(() => {
+        onPremiumActivated?.()
+        onClose()
+      }, 1200)
+    } else {
+      setVerifyState('notfound')
+    }
+  }
 
   const features = [
     t.premium_feature_1,
@@ -68,6 +90,33 @@ export default function PremiumModal({ onClose }: PremiumModalProps) {
         </div>
 
         <p className="text-center text-xs text-slate-400 dark:text-zinc-500 mt-4">{t.premium_cancel}</p>
+
+        <div className="mt-5 pt-5 border-t border-slate-100 dark:border-zinc-800">
+          <p className="text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2 text-center">Already purchased? Activate your premium</p>
+          <div className="flex gap-2">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={verifyEmail}
+              onChange={(e) => { setVerifyEmail(e.target.value); setVerifyState('idle') }}
+              onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
+              className="flex-1 text-sm px-3 py-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+            />
+            <button
+              onClick={handleVerify}
+              disabled={verifyState === 'checking' || verifyState === 'found'}
+              className="text-sm font-semibold px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-60 whitespace-nowrap"
+            >
+              {verifyState === 'checking' ? 'Checking…' : verifyState === 'found' ? '✓ Activated' : 'Verify'}
+            </button>
+          </div>
+          {verifyState === 'notfound' && (
+            <p className="text-xs text-red-500 mt-2 text-center">No premium found for this email.</p>
+          )}
+          {verifyState === 'found' && (
+            <p className="text-xs text-emerald-500 mt-2 text-center">Premium activated! Reloading…</p>
+          )}
+        </div>
       </div>
     </div>
   )

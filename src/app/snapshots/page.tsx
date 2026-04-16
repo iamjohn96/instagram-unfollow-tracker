@@ -5,6 +5,7 @@ import { Trash2, Clock, Lock, Upload, Users, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import PremiumModal from '@/components/PremiumModal'
 import { db, type Snapshot } from '@/utils/db'
 import { useTranslation } from '@/utils/i18n'
 
@@ -13,6 +14,7 @@ export default function SnapshotsPage() {
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [deleting, setDeleting] = useState<number | null>(null)
   const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
 
   useEffect(() => {
     setIsPremiumUser(localStorage.getItem('isPremium') === 'true')
@@ -175,6 +177,12 @@ export default function SnapshotsPage() {
       </main>
 
       <Footer />
+      {showPremiumModal && (
+        <PremiumModal
+          onClose={() => setShowPremiumModal(false)}
+          onPremiumActivated={() => setIsPremiumUser(true)}
+        />
+      )}
     </div>
   )
 }
