@@ -92,11 +92,11 @@ export default function PremiumModal({ onClose, onPremiumActivated }: PremiumMod
         <p className="text-center text-xs text-slate-400 dark:text-zinc-500 mt-4">{t.premium_cancel}</p>
 
         <div className="mt-5 pt-5 border-t border-slate-100 dark:border-zinc-800">
-          <p className="text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2 text-center">Already purchased? Activate your premium</p>
+          <p className="text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2 text-center">{t.premium_verify_title}</p>
           <div className="flex gap-2">
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder={t.premium_verify_placeholder}
               value={verifyEmail}
               onChange={(e) => { setVerifyEmail(e.target.value); setVerifyState('idle') }}
               onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
@@ -107,14 +107,14 @@ export default function PremiumModal({ onClose, onPremiumActivated }: PremiumMod
               disabled={verifyState === 'checking' || verifyState === 'found'}
               className="text-sm font-semibold px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-60 whitespace-nowrap"
             >
-              {verifyState === 'checking' ? 'Checking…' : verifyState === 'found' ? '✓ Activated' : 'Verify'}
+              {verifyState === 'checking' ? '…' : verifyState === 'found' ? '✓' : t.premium_verify_btn}
             </button>
           </div>
           {verifyState === 'notfound' && (
-            <p className="text-xs text-red-500 mt-2 text-center">No premium found for this email. Please check your email or purchase below.</p>
+            <p className="text-xs text-red-500 mt-2 text-center">{t.premium_verify_fail}</p>
           )}
           {verifyState === 'found' && (
-            <p className="text-xs text-emerald-500 mt-2 text-center">Premium activated! Reloading…</p>
+            <p className="text-xs text-emerald-500 mt-2 text-center">{t.premium_verify_success}</p>
           )}
         </div>
       </div>

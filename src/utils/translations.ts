@@ -139,6 +139,11 @@ export const translations = {
     premium_feature_1: "Unlimited snapshots",
     premium_feature_2: "CSV export of all lists",
     premium_feature_4: "Change history timeline",
+    premium_verify_title: "Already purchased?",
+    premium_verify_placeholder: "Enter your email",
+    premium_verify_btn: "Verify",
+    premium_verify_success: "Premium activated! Enjoy your features.",
+    premium_verify_fail: "No premium found for this email.",
 
     // FAQ
     faq_title: "Frequently Asked Questions",
@@ -335,6 +340,11 @@ export const translations = {
     premium_feature_1: "무제한 스냅샷",
     premium_feature_2: "전체 목록 CSV 내보내기",
     premium_feature_4: "변동 이력 타임라인",
+    premium_verify_title: "이미 구매하셨나요?",
+    premium_verify_placeholder: "이메일을 입력하세요",
+    premium_verify_btn: "확인",
+    premium_verify_success: "프리미엄이 활성화되었습니다!",
+    premium_verify_fail: "해당 이메일로 등록된 프리미엄이 없습니다.",
 
     // FAQ
     faq_title: "자주 묻는 질문",
@@ -549,6 +559,11 @@ export const translations = {
     premium_feature_1: "無制限スナップショット",
     premium_feature_2: "全リストのCSVエクスポート",
     premium_feature_4: "変動履歴タイムライン",
+    premium_verify_title: "購入済みの方はこちら",
+    premium_verify_placeholder: "メールアドレスを入力",
+    premium_verify_btn: "確認",
+    premium_verify_success: "プレミアムが有効になりました！",
+    premium_verify_fail: "このメールアドレスのプレミアムが見つかりません。",
 
     // FAQ
     faq_title: "よくある質問",
@@ -763,6 +778,11 @@ export const translations = {
     premium_feature_1: "Instantáneas ilimitadas",
     premium_feature_2: "Exportación CSV de todas las listas",
     premium_feature_4: "Línea de tiempo del historial de cambios",
+    premium_verify_title: "¿Ya compraste?",
+    premium_verify_placeholder: "Ingresa tu email",
+    premium_verify_btn: "Verificar",
+    premium_verify_success: "¡Premium activado!",
+    premium_verify_fail: "No se encontró premium para este email.",
 
     // FAQ
     faq_title: "Preguntas frecuentes",
