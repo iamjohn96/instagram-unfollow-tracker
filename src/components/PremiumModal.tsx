@@ -96,7 +96,7 @@ export default function PremiumModal({ onClose, onPremiumActivated }: PremiumMod
           <div className="flex gap-2">
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="your@email.com"
               value={verifyEmail}
               onChange={(e) => { setVerifyEmail(e.target.value); setVerifyState('idle') }}
               onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
@@ -111,7 +111,7 @@ export default function PremiumModal({ onClose, onPremiumActivated }: PremiumMod
             </button>
           </div>
           {verifyState === 'notfound' && (
-            <p className="text-xs text-red-500 mt-2 text-center">No premium found for this email.</p>
+            <p className="text-xs text-red-500 mt-2 text-center">No premium found for this email. Please check your email or purchase below.</p>
           )}
           {verifyState === 'found' && (
             <p className="text-xs text-emerald-500 mt-2 text-center">Premium activated! Reloading…</p>
