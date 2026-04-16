@@ -331,22 +331,18 @@ export default function DashboardPage() {
                     </div>
                     <p className="text-xs text-slate-500 dark:text-zinc-400 w-full leading-relaxed">{t.dash_premium_desc}</p>
                     <div className="flex flex-row gap-2 w-full">
-                      <a
-                        href="https://checkout.dodopayments.com/buy/pdt_0NbWskBGarEniKABARtpq?quantity=1"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => setShowPremiumModal(true)}
                         className="flex-1 text-center border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 whitespace-nowrap"
                       >
                         {t.upgrade_monthly}
-                      </a>
-                      <a
-                        href="https://checkout.dodopayments.com/buy/pdt_0NbWsnlHHbhazcQwjwDSV?quantity=1"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      </button>
+                      <button
+                        onClick={() => setShowPremiumModal(true)}
                         className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 shadow-sm whitespace-nowrap"
                       >
                         {t.upgrade_yearly}
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -445,22 +441,18 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed w-full">{t.dash_premium_desc}</p>
             <div className="flex flex-row gap-2 w-full">
-              <a
-                href="https://checkout.dodopayments.com/buy/pdt_0NbWskBGarEniKABARtpq?quantity=1"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setShowPremiumModal(true)}
                 className="flex-1 text-center border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
               >
                 {t.upgrade_monthly}
-              </a>
-              <a
-                href="https://checkout.dodopayments.com/buy/pdt_0NbWsnlHHbhazcQwjwDSV?quantity=1"
-                target="_blank"
-                rel="noopener noreferrer"
+              </button>
+              <button
+                onClick={() => setShowPremiumModal(true)}
                 className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm whitespace-nowrap"
               >
                 {t.upgrade_yearly}
-              </a>
+              </button>
             </div>
           </div>
         </div>
