@@ -115,7 +115,7 @@ export default function DashboardPage() {
     followers.forEach((u) => { followersData[u.username] = u.timestamp })
     following.forEach((u) => { followingData[u.username] = u.timestamp })
 
-    if (todaySnapshot?.id) {
+    if (!isPremiumUser && todaySnapshot?.id) {
       await db.snapshots.update(todaySnapshot.id, {
         date: now.toISOString(),
         label,
@@ -242,7 +242,7 @@ export default function DashboardPage() {
           >
             {saveState === 'saved' ? (
               <><Check size={15} /> {t.dash_snapshot_saved}</>
-            ) : todaySnapshot ? (
+            ) : (!isPremiumUser && todaySnapshot) ? (
               <><BookmarkPlus size={15} /> {t.dash_snapshot_update}</>
             ) : (
               <><BookmarkPlus size={15} /> {t.dash_save_snapshot}</>
