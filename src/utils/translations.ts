@@ -8,7 +8,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% Safe - No Login Required",
-    hero_social_proof: "Trusted by 120+ users worldwide",
+    hero_social_proof: "Trusted by 365+ users worldwide",
     hero_title: "The Safest Instagram Unfollow Tracker",
     hero_subtitle: "No login. No ban risk. Your data never leaves your device. Find out who stopped following you instantly.",
     hero_cta: "Start Free Analysis",
@@ -209,7 +209,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% 안전 - 로그인 불필요",
-    hero_social_proof: "전 세계 120명+ 이용 중",
+    hero_social_proof: "전 세계 365명+ 이용 중",
     hero_title: "가장 안전한 인스타그램 언팔 추적기",
     hero_subtitle: "로그인 없이, 계정 정지 위험 없이. 데이터는 기기에서만 처리됩니다. 누가 언팔했는지 바로 확인하세요.",
     hero_cta: "무료 분석 시작",
@@ -410,7 +410,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100%安全 - ログイン不要",
-    hero_social_proof: "世界120人以上が利用中",
+    hero_social_proof: "世界365人以上が利用中",
     hero_title: "最も安全なInstagramフォロー解除トラッカー",
     hero_subtitle: "ログイン不要、アカウント停止リスクなし。データはお使いの端末でのみ処理されます。フォロー解除した人をすぐに確認できます。",
     hero_cta: "無料分析を開始",
@@ -629,7 +629,7 @@ export const translations = {
 
     // Landing
     hero_badge: "100% Seguro - Sin inicio de sesión",
-    hero_social_proof: "Más de 120 usuarios en todo el mundo",
+    hero_social_proof: "Más de 365 usuarios en todo el mundo",
     hero_title: "El rastreador de unfollows de Instagram más seguro",
     hero_subtitle: "Sin inicio de sesión. Sin riesgo de baneo. Tus datos nunca salen de tu dispositivo. Descubre quién dejó de seguirte al instante.",
     hero_cta: "Análisis gratuito",

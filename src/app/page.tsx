@@ -207,8 +207,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
-              { stat: '122+', label: t.stat_users, icon: CheckCircle, iconColor: 'text-blue-500' },
-              { stat: '7+', label: t.stat_countries, icon: Server, iconColor: 'text-cyan-500' },
+              { stat: '365+', label: t.stat_users, icon: CheckCircle, iconColor: 'text-blue-500' },
+              { stat: '10+', label: t.stat_countries, icon: Server, iconColor: 'text-cyan-500' },
               { stat: '0%', label: t.stat_ban, icon: Shield, iconColor: 'text-emerald-500' },
             ].map(({ stat, label, icon: Icon, iconColor }, i) => (
               <div
