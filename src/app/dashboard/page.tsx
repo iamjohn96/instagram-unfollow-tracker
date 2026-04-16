@@ -431,7 +431,7 @@ export default function DashboardPage() {
         )}
 
         {/* Premium teaser */}
-        <div className="mt-6 bg-gradient-to-r from-blue-600/8 to-cyan-500/8 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-900/50 rounded-2xl p-5">
+        {!isPremiumUser && <div className="mt-6 bg-gradient-to-r from-blue-600/8 to-cyan-500/8 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-900/50 rounded-2xl p-5">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -455,7 +455,7 @@ export default function DashboardPage() {
               </button>
             </div>
           </div>
-        </div>
+        </div>}
       </main>
 
       <Footer />
