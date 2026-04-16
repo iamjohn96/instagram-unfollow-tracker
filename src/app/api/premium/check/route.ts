@@ -6,5 +6,7 @@ export async function GET(req: NextRequest) {
   if (!email) return NextResponse.json({ isPremium: false })
 
   const result = await redis.get(`premium:${email.toLowerCase()}`)
-  return NextResponse.json({ isPremium: result === 'true' })
+  console.log('Premium check:', email, 'result:', result, 'type:', typeof result)
+  const isPremium = result === 'true' || result === true || result === 1 || String(result) === 'true'
+  return NextResponse.json({ isPremium })
 }
