@@ -430,32 +430,6 @@ export default function DashboardPage() {
           </>
         )}
 
-        {/* Premium teaser */}
-        {!isPremiumUser && <div className="mt-6 bg-gradient-to-r from-blue-600/8 to-cyan-500/8 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-900/50 rounded-2xl p-5">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Lock size={16} className="text-blue-600 dark:text-blue-400" />
-              </div>
-              <p className="font-semibold text-slate-900 dark:text-white text-sm">{t.dash_premium_title}</p>
-            </div>
-            <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed w-full">{t.dash_premium_desc}</p>
-            <div className="flex flex-row gap-2 w-full">
-              <button
-                onClick={() => setShowPremiumModal(true)}
-                className="flex-1 text-center border border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
-              >
-                {t.upgrade_monthly}
-              </button>
-              <button
-                onClick={() => setShowPremiumModal(true)}
-                className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-sm whitespace-nowrap"
-              >
-                {t.upgrade_yearly}
-              </button>
-            </div>
-          </div>
-        </div>}
       </main>
 
       <Footer />
