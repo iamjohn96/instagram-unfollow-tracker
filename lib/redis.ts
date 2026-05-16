@@ -39,7 +39,7 @@ export async function getAllPremiumUsers(): Promise<PremiumUser[]> {
     cursor = nextCursor;
 
     if (keys.length > 0) {
-      const values = await redis.mget<string | { status: string; renewal?: number }>(...keys as string[]);
+      const values = await redis.mget<Array<string | { status: string; renewal?: number }>>(...keys);
       keys.forEach((key, i) => {
         const val = values[i];
         const email = key.replace('premium:', '');
