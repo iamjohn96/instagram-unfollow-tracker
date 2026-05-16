@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isPremiumEmail, removePremiumEmail, getSubscriptionId } from '@/lib/redis';
+import {
+  isPremiumEmail,
+  removePremiumEmail,
+  getSubscriptionId,
+  getCancelToken,
+  deleteCancelToken,
+} from '@/lib/redis';
 
 const DODO_API_BASE = 'https://api.dodopayments.com';
 
@@ -11,7 +17,6 @@ const DODO_API_BASE = 'https://api.dodopayments.com';
 async function cancelDodoSubscription(subscriptionId: string): Promise<boolean> {
   const apiKey = process.env.DODO_API_KEY;
   if (!apiKey) {
-    // No API key configured — skip remote cancellation but allow local removal.
     console.warn('[cancel] DODO_API_KEY not set; skipping remote cancellation');
     return true;
   }
@@ -28,7 +33,7 @@ async function cancelDodoSubscription(subscriptionId: string): Promise<boolean> 
     },
   );
 
-  // 200 = cancelled successfully; 404 = already cancelled / not found — both OK
+  // 200 = cancelled; 404 = already gone — both acceptable
   if (response.ok || response.status === 404) return true;
 
   const text = await response.text().catch(() => '');
@@ -38,23 +43,45 @@ async function cancelDodoSubscription(subscriptionId: string): Promise<boolean> 
   return false;
 }
 
+/**
+ * DELETE /api/premium/cancel
+ *
+ * Step 2 of the 2-step cancellation flow.
+ * Accepts { email, token }, verifies the OTP against Redis, then cancels
+ * the subscription with Dodo Payments and removes premium access.
+ */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
-  let body: { email?: unknown };
+  let body: { email?: unknown; token?: unknown };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const { email } = body;
+  const { email, token } = body;
 
   if (typeof email !== 'string' || !email.includes('@')) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
   }
+  if (typeof token !== 'string' || token.trim() === '') {
+    return NextResponse.json({ error: 'Confirmation code is required' }, { status: 400 });
+  }
 
   const normalised = email.toLowerCase().trim();
 
-  // Verify this email actually has premium
+  // Verify OTP — reject if missing or expired
+  const storedToken = await getCancelToken(normalised);
+  if (!storedToken || storedToken !== token.trim()) {
+    return NextResponse.json(
+      { error: 'Invalid or expired confirmation code' },
+      { status: 401 },
+    );
+  }
+
+  // Token is valid — consume it immediately to prevent reuse
+  await deleteCancelToken(normalised);
+
+  // Guard: confirm the email still has premium before touching Dodo
   const hasPremium = await isPremiumEmail(normalised);
   if (!hasPremium) {
     return NextResponse.json(

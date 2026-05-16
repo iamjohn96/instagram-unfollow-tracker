@@ -87,6 +87,29 @@ export async function getPremiumEmailsDueForReminder(): Promise<string[]> {
 }
 
 // ---------------------------------------------------------------------------
+// Cancellation token helpers (one-time 6-digit OTP, 15-minute TTL)
+// ---------------------------------------------------------------------------
+
+const CANCEL_TOKEN_TTL_SECONDS = 15 * 60;
+
+export async function setCancelToken(email: string, token: string): Promise<void> {
+  await redis.set(
+    `cancel_token:${email.toLowerCase().trim()}`,
+    token,
+    { ex: CANCEL_TOKEN_TTL_SECONDS },
+  );
+}
+
+export async function getCancelToken(email: string): Promise<string | null> {
+  const val = await redis.get(`cancel_token:${email.toLowerCase().trim()}`);
+  return typeof val === 'string' ? val : null;
+}
+
+export async function deleteCancelToken(email: string): Promise<void> {
+  await redis.del(`cancel_token:${email.toLowerCase().trim()}`);
+}
+
+// ---------------------------------------------------------------------------
 // Rate limiting (sliding fixed-window, 10 req / 60 s per IP)
 // ---------------------------------------------------------------------------
 

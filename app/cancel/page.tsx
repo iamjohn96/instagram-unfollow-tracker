@@ -3,14 +3,51 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-type Step = 'form' | 'confirm' | 'success' | 'error';
+type Step = 'form' | 'token' | 'confirm' | 'success' | 'error';
 
 export default function CancelPage() {
   const [step, setStep] = useState<Step>('form');
   const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Step 1 — request the OTP
+  async function handleRequestCode() {
+    if (!email.includes('@')) {
+      setErrorMsg('Please enter a valid email address.');
+      setStep('error');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/premium/cancel/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const data: { error?: string } = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error ?? 'Something went wrong. Please try again.');
+        setStep('error');
+        return;
+      }
+
+      setStep('token');
+    } catch {
+      setErrorMsg('Network error. Please check your connection and try again.');
+      setStep('error');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Step 3 — submit cancellation with token
   async function handleCancel() {
     setLoading(true);
     setErrorMsg('');
@@ -19,7 +56,7 @@ export default function CancelPage() {
       const res = await fetch('/api/premium/cancel', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), token: token.trim() }),
       });
 
       const data: { error?: string } = await res.json();
@@ -53,7 +90,7 @@ export default function CancelPage() {
             </h1>
             <p className="text-sm text-zinc-500 mb-6 leading-relaxed">
               Enter the email address you used to purchase SafeUnfollow Premium.
-              We&apos;ll cancel your subscription and remove your premium access.
+              We&apos;ll email you a confirmation code before cancelling.
             </p>
 
             <label htmlFor="email" className="block text-sm font-medium text-zinc-700 mb-1.5">
@@ -64,6 +101,7 @@ export default function CancelPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleRequestCode(); }}
               placeholder="you@example.com"
               className="w-full border border-zinc-200 rounded-xl px-4 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent mb-6"
             />
@@ -80,18 +118,11 @@ export default function CancelPage() {
             </div>
 
             <button
-              onClick={() => {
-                if (!email.includes('@')) {
-                  setErrorMsg('Please enter a valid email address.');
-                  setStep('error');
-                  return;
-                }
-                setErrorMsg('');
-                setStep('confirm');
-              }}
-              className="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-3 rounded-full text-sm transition-colors"
+              onClick={handleRequestCode}
+              disabled={loading}
+              className="w-full bg-zinc-900 hover:bg-zinc-800 disabled:opacity-60 text-white font-semibold py-3 rounded-full text-sm transition-colors"
             >
-              Continue
+              {loading ? 'Sending code…' : 'Send confirmation code'}
             </button>
 
             <p className="mt-4 text-center text-xs text-zinc-400">
@@ -104,7 +135,68 @@ export default function CancelPage() {
         )}
 
         {/* ---------------------------------------------------------------- */}
-        {/* Step 2 — Confirmation                                            */}
+        {/* Step 2 — Token input                                             */}
+        {/* ---------------------------------------------------------------- */}
+        {step === 'token' && (
+          <div className="bg-white border border-zinc-100 rounded-2xl p-8 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+
+            <h2 className="text-xl font-bold text-zinc-900 mb-2">
+              Check your email
+            </h2>
+            <p className="text-sm text-zinc-500 mb-1">
+              We sent a 6-digit confirmation code to:
+            </p>
+            <p className="text-sm font-semibold text-zinc-900 mb-6 break-all">
+              {email}
+            </p>
+
+            <label htmlFor="token" className="block text-sm font-medium text-zinc-700 mb-1.5">
+              Confirmation code
+            </label>
+            <input
+              id="token"
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              value={token}
+              onChange={(e) => setToken(e.target.value.replace(/\D/g, ''))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && token.length === 6) setStep('confirm');
+              }}
+              placeholder="123456"
+              className="w-full border border-zinc-200 rounded-xl px-4 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 text-center tracking-widest text-lg font-mono focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent mb-6"
+            />
+
+            <p className="text-xs text-zinc-400 mb-6 text-center">
+              Code expires in 15 minutes.
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => setStep('confirm')}
+                disabled={token.length !== 6}
+                className="w-full bg-zinc-900 hover:bg-zinc-800 disabled:opacity-40 text-white font-semibold py-3 rounded-full text-sm transition-colors"
+              >
+                Next
+              </button>
+              <button
+                onClick={() => { setToken(''); setStep('form'); }}
+                className="w-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 font-semibold py-3 rounded-full text-sm transition-colors"
+              >
+                Use a different email
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Step 3 — Confirmation                                            */}
         {/* ---------------------------------------------------------------- */}
         {step === 'confirm' && (
           <div className="bg-white border border-zinc-100 rounded-2xl p-8 shadow-sm">
@@ -138,7 +230,7 @@ export default function CancelPage() {
                 {loading ? 'Cancelling…' : 'Yes, cancel my subscription'}
               </button>
               <button
-                onClick={() => setStep('form')}
+                onClick={() => setStep('token')}
                 disabled={loading}
                 className="w-full bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-semibold py-3 rounded-full text-sm transition-colors"
               >
@@ -149,7 +241,7 @@ export default function CancelPage() {
         )}
 
         {/* ---------------------------------------------------------------- */}
-        {/* Step 3 — Success                                                 */}
+        {/* Step 4 — Success                                                 */}
         {/* ---------------------------------------------------------------- */}
         {step === 'success' && (
           <div className="bg-white border border-zinc-100 rounded-2xl p-8 shadow-sm text-center">
@@ -213,6 +305,7 @@ export default function CancelPage() {
             </div>
           </div>
         )}
+
       </div>
     </main>
   );
